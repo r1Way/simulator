@@ -2,7 +2,7 @@
 
 ## api
 
-![event](photos\event.png)
+![event](photos/event.png)
 
 ### <mark>MapNode<mark>
 
