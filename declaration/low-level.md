@@ -4,6 +4,8 @@
 
 ![event](photos/event.png)
 
+
+
 ### <mark>MapNode<mark>
 
 为结点，提供图的结构
@@ -34,7 +36,9 @@
 
 为其值
 
-#### int delay
+#### MapNode *here
+
+指向承载自己的MapNode的指针
 
 #### setValue()
 
@@ -63,7 +67,15 @@
 
 #### vector< vector< int>>  delay
 
-二维数组，描述了in到out
+二维数组，描述了in到out的延迟
+
+ #### vector< Element >  figureValue();
+
+  计算各个out的值，返回一个temp表,记录信息，但不赋值
+
+ ####  vector< bool > always();
+
+  判断对应out的value与latestValue（调用latestValueGate（...））相比，是否发生了改变，返回一个bool数组
 
 
 
@@ -87,7 +99,7 @@
 
 为时间表，记录有驱动事件的时间，通过List进行管理
 
-#### int time
+#### long long time
 
 记录此时的时间
 
@@ -130,6 +142,22 @@
 
 ### <mark>全局函数<mark>
 
-update(EventNode& );
+#### void update(EventNode& );
 
-更新event对应element的状况，以及element对应Gate的状况，并将新的状况插入到对应TimeNode的events_ptr中
+更新Element对应的值，Gate进行定值，与先前定值进行比较，判断是否需要修改(调用Gate::always())，如要修改，将修改的out，进行传递(调用transmit(...))，并在对应时间添加事件。
+
+####void addEvent(long long time,Element & ,value );
+
+添加Elment改变的value到time时的events上
+
+#### int latestValueElement(Element &,long long start,long long end);
+
+搜索latestValue在start到end最末端的值[start,end)
+
+#### vector< int > latestValueGate(Gate &,long long start,long long end);
+
+搜索Gate所有out的latestValue在start到end最末端的值[start,end)，返回一个数组。
+
+#### void transmit(Element &，int delay);
+
+将该Element的值通过Map进行传递（但并不改变末端的值），只是添加事件。
