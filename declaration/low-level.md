@@ -2,7 +2,7 @@
 
 ## api
 
-![event](G:\inspiration\simulator\photos\event.png)
+![event](photos\event.png)
 
 ### <mark>MapNode<mark>
 
