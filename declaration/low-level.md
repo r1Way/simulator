@@ -44,10 +44,10 @@
 
 
 
-### ==Gate==
+### <marK>Gate<mark>
 门与各种元件的统称
 
-####vector< Element > in
+#### vector< Element > in
 
 各个输入接口
 
@@ -65,7 +65,7 @@
 
 
 
-### ==EventNode==
+### <mark>EventNode<mark>
 
 记录各个输入值的更改,更改亦有先后,通过List进行管理，组成EventList
 
@@ -73,13 +73,13 @@
 
 记录更改的Element
 
-####vector< int> value
+#### vector< int> value
 
 记录对应更改的值
 
 
 
-### ==TimeNode==
+### <mark>TimeNode<mark>
 
 为时间表，记录有驱动事件的时间，通过List进行管理
 
@@ -93,11 +93,11 @@
 
 
 
-###==List==
+### <mark>List<mark>
 
 为链表模版
 
-####push_back(T data)
+#### push_back(T data)
 
 #### push_front(T data)
 
@@ -105,7 +105,7 @@
 
 
 
-###==全局函数==
+### <mark>全局函数<mark>
 
 update(EventNode& );
 
