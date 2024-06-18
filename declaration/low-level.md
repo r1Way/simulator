@@ -14,7 +14,7 @@
 
 数据
 
-#### vector< MapNode> from
+#### vector< MapNode*> from_ptr
 
 记录信号从哪来
 
@@ -36,9 +36,13 @@
 
 为其值
 
-#### MapNode *here
+#### Gate *gate
 
-指向承载自己的MapNode的指针
+指向自己所在的Gate门
+
+#### Element(int value=0)
+
+构造函数
 
 #### setValue()
 
@@ -53,11 +57,11 @@
 ### <marK>Gate<mark>
 门与各种元件的统称
 
-#### vector< Element > in
+#### vector< MapNode *> in
 
 各个输入接口
 
-#### vector< Element > out
+#### vector< MapNode *> out
 
 各个输出接口
 
@@ -65,11 +69,11 @@
 
 列举各接口名称
 
-#### vector< vector< int>>  delay
+####  vector< vector< int>>  delay;
 
 二维数组，描述了in到out的延迟
 
- #### vector< Element >  figureValue();
+ #### virtual vector< int >  figureValue();
 
   计算各个out的值，返回一个temp表,记录信息，但不赋值
 
@@ -139,6 +143,7 @@
 
 #### insert_back()
 
+#### print()
 
 ### <mark>全局函数<mark>
 
@@ -146,11 +151,11 @@
 
 更新Element对应的值，Gate进行定值，与先前定值进行比较，判断是否需要修改(调用Gate::always())，如要修改，将修改的out，进行传递(调用transmit(...))，并在对应时间添加事件。
 
-####void addEvent(long long time,Element & ,value );
+####void addEvent(long long time,MapNode & ,value );
 
 添加Elment改变的value到time时的events上
 
-#### int latestValueElement(Element &,long long start,long long end);
+#### int latestValueElement(MapNode &,long long start,long long end);
 
 搜索latestValue在start到end最末端的值[start,end)
 
@@ -158,6 +163,16 @@
 
 搜索Gate所有out的latestValue在start到end最末端的值[start,end)，返回一个数组。
 
-#### void transmit(Element &，int delay);
+#### void transmit(MapNode &，int delay);
 
 将该Element的值通过Map进行传递（但并不改变末端的值），只是添加事件。
+
+## 日志
+
+### 2024.6.18
+
+Gate类实现混乱，应当用MapNode作为其接口而不是Element，always()的if判断出了问题，可能是MapNode未写完。
+
+figureValue与delay均未完成。
+
+部分类忘记写构造函数。
