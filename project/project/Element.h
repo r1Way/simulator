@@ -14,6 +14,10 @@ public:
 	{
 		this->value = value;
 	}
+	void setGate(Gate* gate)
+	{
+		this->gate = gate;
+	}
 	int getValue()
 	{
 		return this->value;
