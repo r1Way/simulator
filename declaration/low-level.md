@@ -1,3 +1,7 @@
+[toc]
+
+
+
 # 初级版本
 
 ## api
@@ -48,6 +52,10 @@
 
 设置自己的值
 
+#### void setGate(Gate *)
+
+绑定门
+
 #### getValue()
 
 获取自己的值
@@ -73,13 +81,17 @@
 
 二维数组，描述了in到out的延迟
 
- #### virtual vector< int >  figureValue();
+ #### virtual vector< int >  figureValue()=0;
 
   计算各个out的值，返回一个temp表,记录信息，但不赋值
 
- ####  vector< bool > always();
+ ####  vector< bool > always(Time * pre);
 
-  判断对应out的value与latestValue（调用latestValueGate（...））相比，是否发生了改变，返回一个bool数组
+  判断对应out的value与latestValue（调用latestValueGate（...））相比，是否发生了改变，返回一个bool数组，发生了变化，则为true,未发生变化，则为false
+
+#### vector< int > lastValue(Time * time);
+
+返回离判定点最近的一次value数组
 
 
 
@@ -87,11 +99,11 @@
 
 记录各个输入值的更改,更改亦有先后,通过List进行管理，组成EventList
 
-#### vector<Element *> elements_ptr
+#### Element * element_ptr
 
 记录更改的Element
 
-#### vector< int > values
+#### int values
 
 
 记录对应更改的值
@@ -107,11 +119,13 @@
 
 记录此时的时间
 
-#### list< Event>* events_ptr
+#### list< Event>* eventList_ptr
 
 记录该时间的事件链
 
+#### addEvent(Event *event);
 
+增加event，先判定eventList_ptr是否已经生成（堆区），记得写析构函数。
 
 ### <mark>ListNode<mark>
 
@@ -167,6 +181,18 @@
 
 将该Element的值通过Map进行传递（但并不改变末端的值），只是添加事件。
 
+
+
+### 全局变量
+
+#### Time * now;
+
+记录现在的时间
+
+#### Time * pre
+
+记录现在正在预言的时间
+
 ## 日志
 
 ### 2024.6.18
@@ -176,3 +202,7 @@ Gate类实现混乱，应当用MapNode作为其接口而不是Element，always()
 figureValue与delay均未完成。
 
 部分类忘记写构造函数。
+
+### 2024.6.21
+
+完成了Event类和Time类的实现，但Gate类的always(Time *time)的实现有些麻烦。需要用到`virtual vector< int >  figureValue()=0;`以及`vector< int > lastValue(Time * time);`这两个函数的实现有些麻烦。增加了全局变量 now与 pre，记录两个时间。增加了Time的成员函数`void addEvent(Event *event);`但现在还没来的及写实现，忘记写Time的析构函数了，因为eventList是放在堆区的。
